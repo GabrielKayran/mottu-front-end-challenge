@@ -21,9 +21,14 @@ export class HomeComponent implements OnInit {
     name: '',
     species: '',
   };
+  public favorites: Array<Character> = [];
 
   ngOnInit(): void {
     this.getCharacters();
+  }
+
+  public console() {
+    console.log(this.favorites);
   }
 
   public getCharacters() {
@@ -55,6 +60,17 @@ export class HomeComponent implements OnInit {
         });
     } else {
       this.getCharacters();
+    }
+  }
+
+  public isFav(character: Character): boolean {
+    return this.favorites.some((fav) => fav.id === character.id);
+  }
+  public updateFav(isFav: boolean, character: Character) {
+    if (isFav) {
+      this.favorites.push(this.character);
+    } else {
+      this.favorites = this.favorites.filter((fav) => fav.id !== character.id);
     }
   }
 }
