@@ -1,0 +1,33 @@
+main {
+  display: flex;
+  justify-content: center;
+  background: var(--gray-20);
+}
+
+div.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 720px;
+}
+
+div.search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  input {
+    padding: 13px 16px;
+    color: var(--gray-5);
+    background-color: var(--gray-20);
+    border: 1px solid var(--gray-10);
+    border-radius: 8px;
+    outline: none;
+  }
+
+  ::-webkit-input-placeholder {
+    color: var(--gray-5);
+  }
+}
