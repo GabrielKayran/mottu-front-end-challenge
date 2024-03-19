@@ -1,0 +1,12 @@
+<div class="card">
+
+  <button class="heart" (click)="toggleFav()">
+    <img *ngIf="fav" src="../../../../../assets/icons/icon-heart-black.svg" alt="">
+    <img *ngIf="!fav" src="../../../../../assets/icons/icon-heart.svg" alt="">
+  </button>
+  <img [src]="character.image" alt="">
+  <div class="card-content">
+    <h2>{{character.name}}</h2>
+    <p>{{character.species}}</p>
+  </div>
+</div>

@@ -2,8 +2,17 @@
 <main>
   <div class="container">
     <div class="search">
-      <img src="../../../../../assets/icons/title-home.svg" alt="">
-      <input type="text" placeholder="Pesquisar">
+      <h1>Início</h1>
+      <input type="text" placeholder="Pesquisar" [(ngModel)]="searchTerm" (input)="searchCharacter(searchTerm)">
+    </div>
+
+    <div class="cards" *ngIf="characters">
+      <app-card *ngFor="let character of characters" [character]="character"></app-card>
+    </div>
+
+    <div class="no-characters" *ngIf="!characters">
+      <h2> Nada foi encontrado</h2>
+      <span>Tente realizar uma nova busca.</span>
     </div>
 
   </div>
