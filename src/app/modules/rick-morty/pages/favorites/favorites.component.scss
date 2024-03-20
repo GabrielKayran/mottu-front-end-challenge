@@ -2,6 +2,7 @@ main {
   display: flex;
   justify-content: center;
   background: var(--gray-20);
+  min-height: 100vh;
 }
 
 div.container {
@@ -87,4 +88,28 @@ div.no-characters {
 div.cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 776px) {
+  div.cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  div.no-characters {
+    min-width: 480px;
+  }
+}
+
+@media (max-width: 520px) {
+  div.cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  div.no-characters {
+    min-width: 320px;
+  }
+}
+
+@media (max-width: 488px) {
+  div.no-characters {
+    min-width: 280px;
+  }
 }

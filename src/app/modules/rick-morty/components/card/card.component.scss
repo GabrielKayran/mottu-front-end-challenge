@@ -34,6 +34,14 @@ button.heart {
     color: var(--black);
     width: 20px;
     height: 19px;
+    transition: transform 0.7s ease-in-out;
+  }
+
+  &:focus {
+    outline: none;
+  }
+  img:hover {
+    transform: rotate(360deg);
   }
 }
 

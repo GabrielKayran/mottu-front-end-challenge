@@ -37,12 +37,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  public getCharacter(id: number) {
-    this.rickMortyApiService.getCharacter(id).subscribe((response) => {
-      this.character = response;
-    });
-  }
-
   public searchCharacter(name: string) {
     if (name.trim() !== '') {
       this.rickMortyApiService
