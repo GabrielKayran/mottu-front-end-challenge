@@ -1,10 +1,10 @@
 <header>
   <img src="../../../../../assets/images/logo-rick-morty.svg" alt="">
   <div class="buttons">
-    <button class="home" routerLink="/home" routerLinkActive="active">
+    <button class="home" [routerLink]="['/home']" [class.active]="isActive('/') || isActive('/home')">
       <div>
         <img
-          [src]="isActive('/home' ) ? '../../../../../assets/icons/icon-black-house.svg' : '../../../../../assets/icons/icon-gray-house.svg'"
+          [src]="isActive('/') || isActive('/home')  ? '../../../../../assets/icons/icon-black-house.svg' : '../../../../../assets/icons/icon-gray-house.svg'"
           alt="">
         <span>Início</span>
       </div>

@@ -67,6 +67,7 @@ div.no-characters {
     &:hover {
       background-color: var(--gray-10);
       color: white;
+      cursor: pointer;
     }
 
     &:active {
