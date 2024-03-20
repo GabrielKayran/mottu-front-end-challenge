@@ -3,6 +3,7 @@ import { RickMortyApiService } from 'src/app/service/rick-morty-api.service';
 import { Character } from 'src/app/interfaces/character';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { FavoritesService } from 'src/app/service/favorites.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,10 @@ import { of } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private rickMortyApiService: RickMortyApiService) {}
+  constructor(
+    private rickMortyApiService: RickMortyApiService,
+    private favoritesService: FavoritesService
+  ) {}
 
   public results: any = [];
   public searchTerm: string = '';
@@ -21,14 +25,9 @@ export class HomeComponent implements OnInit {
     name: '',
     species: '',
   };
-  public favorites: Array<Character> = [];
 
   ngOnInit(): void {
     this.getCharacters();
-  }
-
-  public console() {
-    console.log(this.favorites);
   }
 
   public getCharacters() {
@@ -64,13 +63,15 @@ export class HomeComponent implements OnInit {
   }
 
   public isFav(character: Character): boolean {
-    return this.favorites.some((fav) => fav.id === character.id);
+    return this.favoritesService
+      .getFavorites()
+      .some((fav) => fav.id === character.id);
   }
   public updateFav(isFav: boolean, character: Character) {
     if (isFav) {
-      this.favorites.push(this.character);
+      this.favoritesService.addFavorite(character);
     } else {
-      this.favorites = this.favorites.filter((fav) => fav.id !== character.id);
+      this.favoritesService.removeFavorite(character);
     }
   }
 }

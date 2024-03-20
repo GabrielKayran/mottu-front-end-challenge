@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Character } from 'src/app/interfaces/character';
+import { FavoritesService } from 'src/app/service/favorites.service';
 
 @Component({
   selector: 'app-favorites',
@@ -8,12 +9,33 @@ import { Character } from 'src/app/interfaces/character';
 })
 export class FavoritesComponent implements OnInit {
   public favorites: Array<Character> = [];
+  public character: Character = {
+    id: 0,
+    image: '',
+    name: '',
+    species: '',
+  };
 
-  constructor() {}
+  constructor(private favoritesService: FavoritesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getFavorites();
+  }
 
-  public removeFavorite(id: number): void {
-    this.favorites = this.favorites.filter((character) => character.id !== id);
+  public console() {
+    console.log(this.favorites);
+  }
+
+  public getFavorites() {
+    this.favorites = this.favoritesService.getFavorites();
+  }
+
+  public removeFavorite(character: Character) {
+    this.favoritesService.removeFavorite(character);
+    this.getFavorites();
+  }
+
+  public removeFromFavorites(character: Character) {
+    this.removeFavorite(character);
   }
 }

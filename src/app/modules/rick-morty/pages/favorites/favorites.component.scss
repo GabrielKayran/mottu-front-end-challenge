@@ -11,7 +11,13 @@ div.container {
   width: 720px;
 }
 
+div.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 div.top {
+  margin-top: 48px;
   width: 100%;
   display: flex;
   justify-content: flex-start;

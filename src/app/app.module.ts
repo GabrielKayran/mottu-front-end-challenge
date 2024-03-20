@@ -9,10 +9,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardComponent } from './modules/rick-morty/components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { FavoritesComponent } from './modules/rick-morty/pages/favorites/favorites.component';
+import { MatSlideToggleModule } from '@angular/material';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent, CardComponent, FavoritesComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    CardComponent,
+    FavoritesComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatSlideToggleModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

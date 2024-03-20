@@ -16,19 +16,28 @@ header {
   }
 }
 
-button.home {
+button {
+  color: var(--gray);
+  background-color: var(--black);
   display: flex;
   align-items: center;
-  color: var(--black);
-  background-color: var(--white);
   border: 0.5px solid var(--gray-10);
-  border-radius: 8px 0px 0px 8px;
-
   div {
     display: flex;
     align-items: center;
     margin: 8px 0px;
   }
+
+  &:hover {
+    background-color: var(--gray-10);
+  }
+
+  transition: background-color 0.3s;
+}
+
+button.home {
+  border-radius: 8px 0px 0px 8px;
+
   img {
     margin-left: 12px;
     margin-right: 0.5rem;
@@ -42,18 +51,8 @@ button.home {
 }
 
 button.favs {
-  display: flex;
-  align-items: center;
-  color: var(--gray);
-  background-color: var(--black);
-  border: 0.5px solid var(--gray-10);
   border-radius: 0px 8px 8px 0px;
 
-  div {
-    display: flex;
-    align-items: center;
-    margin: 8px 0px;
-  }
   img {
     margin-left: 0.5rem;
     width: 24px;
@@ -67,10 +66,24 @@ button.favs {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(10, 10, 10, 1);
+    color: var(--black);
     width: 20px;
     height: 20px;
     background-color: var(--white);
     border-radius: 50%;
+  }
+}
+
+button.active {
+  color: var(--black);
+  background-color: var(--white);
+
+  span.count {
+    color: var(--white);
+    background-color: var(--black);
+  }
+
+  &:hover {
+    background-color: var(--gray-5);
   }
 }

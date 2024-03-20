@@ -1,3 +1,4 @@
+import { FavoritesService } from 'src/app/service/favorites.service';
 import { Character } from './../../../../interfaces/character';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
@@ -12,15 +13,19 @@ export class CardComponent implements OnInit {
     name: '',
     species: '',
   };
-  @Input() fav: boolean = false;
-  @Output() favChange = new EventEmitter<boolean>();
 
-  constructor() {}
+  @Input() isFavorite: boolean = false;
+  @Output() updateFavorite: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  ngOnInit(): void {}
+  constructor(private favoritesService: FavoritesService) {}
+
+  ngOnInit(): void {
+    this.isFavorite = this.favoritesService
+      .getFavorites()
+      .some((fav) => fav.id === this.character.id);
+  }
 
   public toggleFav(): void {
-    this.fav = !this.fav;
-    this.favChange.emit(this.fav);
+    this.updateFavorite.emit(!this.isFavorite);
   }
 }
