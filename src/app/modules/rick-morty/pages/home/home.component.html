@@ -3,7 +3,14 @@
   <div class="container">
     <div class="search">
       <h1>Início</h1>
-      <input type="text" placeholder="Pesquisar" [(ngModel)]="searchTerm" (input)="searchCharacter(searchTerm)">
+
+
+      <mat-form-field class="form" appearance="outline">
+        <mat-label class="label">Pesquisar</mat-label>
+        <input matInput class="input" type="text" [(ngModel)]="searchTerm" (input)="onSearchTermChanged(searchTerm)">
+      </mat-form-field>
+
+
     </div>
 
     <div class="cards" *ngIf="characters">

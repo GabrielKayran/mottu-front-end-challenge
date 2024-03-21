@@ -91,18 +91,29 @@ button.active {
 
 @media (max-width: 433px) {
   button {
-    img {
-      display: none;
-    }
+    min-height: 40px;
   }
 
-  span.count {
-    display: none !important;
-    background: transparent;
+  .description {
+    display: none;
+  }
+
+  button.favs {
+    span.count {
+      margin: 0px 2px;
+    }
   }
   button.home {
     span {
       margin-left: 5px;
     }
   }
+  button.favs {
+    img {
+      margin-right: 5px;
+    }
+  }
+}
+
+@media (max-width: 340px) {
 }

@@ -92,25 +92,36 @@ div.cards {
 }
 
 @media (max-width: 776px) {
+  div.top {
+    max-width: 496px;
+  }
   div.cards {
     grid-template-columns: repeat(2, 1fr);
   }
   div.no-characters {
+    padding: 20px;
     min-width: 480px;
   }
 }
 
 @media (max-width: 520px) {
+  div.top {
+    justify-content: center;
+  }
   div.cards {
     grid-template-columns: repeat(1, 1fr);
   }
   div.no-characters {
+    padding: 20px;
     min-width: 320px;
+    max-width: 320px;
   }
 }
 
 @media (max-width: 488px) {
   div.no-characters {
+    padding: 20px;
     min-width: 280px;
+    max-width: 320px;
   }
 }

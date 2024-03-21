@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RickMortyApiService } from 'src/app/service/rick-morty-api.service';
 import { Character } from 'src/app/interfaces/character';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
 import { FavoritesService } from 'src/app/service/favorites.service';
 
 @Component({
@@ -25,9 +25,16 @@ export class HomeComponent implements OnInit {
     name: '',
     species: '',
   };
+  private searchTermChanged: Subject<string> = new Subject<string>();
 
   ngOnInit(): void {
     this.getCharacters();
+
+    this.searchTermChanged
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((term: string) => {
+        this.searchCharacter(term);
+      });
   }
 
   public getCharacters() {
@@ -38,7 +45,7 @@ export class HomeComponent implements OnInit {
   }
 
   public searchCharacter(name: string) {
-    if (name.trim() !== '') {
+    if (name.trim() !== '' && name.length > 0) {
       this.rickMortyApiService
         .searchCharacter(name)
         .pipe(
@@ -61,11 +68,16 @@ export class HomeComponent implements OnInit {
       .getFavorites()
       .some((fav) => fav.id === character.id);
   }
+
   public updateFav(isFav: boolean, character: Character) {
     if (isFav) {
       this.favoritesService.addFavorite(character);
     } else {
       this.favoritesService.removeFavorite(character);
     }
+  }
+
+  public onSearchTermChanged(term: string): void {
+    this.searchTermChanged.next(term);
   }
 }

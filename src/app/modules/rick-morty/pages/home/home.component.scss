@@ -5,6 +5,34 @@ main {
   min-height: 100vh;
 }
 
+::ng-deep {
+  .mat-input-element {
+    caret-color: var(--white);
+    color: var(--white) !important;
+  }
+  .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: var(--gray);
+  }
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: var(--gray-10);
+  }
+
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: var(--gray-10);
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+}
+
+.form {
+  width: 20.5rem;
+}
+.label {
+  color: var(--white);
+}
+
 div.container {
   display: flex;
   flex-direction: column;
@@ -16,18 +44,10 @@ div.search {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   width: 100%;
   margin-top: 48px;
   margin-bottom: 36px;
-
-  input {
-    padding: 13px 16px;
-    color: var(--gray-5);
-    background-color: var(--gray-20);
-    border: 1px solid var(--gray-10);
-    border-radius: 8px;
-    outline: none;
-  }
 
   h1 {
     font-family: "Creepster", system-ui;
@@ -37,9 +57,9 @@ div.search {
     font-size: 48px;
   }
 
-  ::-webkit-input-placeholder {
-    color: var(--gray-5);
-  }
+  // ::-webkit-input-placeholder {
+  //   color: var(--gray-5);
+  // }
 }
 
 div.cards {
@@ -71,6 +91,9 @@ div.no-characters {
 }
 
 @media (max-width: 776px) {
+  div.search {
+    max-width: 496px;
+  }
   div.cards {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -80,6 +103,13 @@ div.no-characters {
 }
 
 @media (max-width: 520px) {
+  div.search {
+    max-width: 320px;
+    flex-direction: column;
+  }
+  .form {
+    width: auto;
+  }
   div.cards {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -89,6 +119,9 @@ div.no-characters {
 }
 
 @media (max-width: 433px) {
+  div.search {
+    flex-direction: column;
+  }
   div.container {
     width: 100vw;
   }

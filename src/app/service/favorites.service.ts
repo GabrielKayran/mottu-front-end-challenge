@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Character } from '../interfaces/character';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,16 +8,20 @@ import { Character } from '../interfaces/character';
 export class FavoritesService {
   private favoritesKey = 'favorites';
   private favorites: Array<Character> = [];
+  private favoriteCountSubject: BehaviorSubject<number>;
 
   constructor() {
     const storedFavorites = localStorage.getItem(this.favoritesKey);
+    this.favoriteCountSubject = new BehaviorSubject<number>(0);
     if (storedFavorites) {
       this.favorites = JSON.parse(storedFavorites);
+      this.favoriteCountSubject.next(this.favorites.length);
     }
   }
 
   private saveFavorites(): void {
     localStorage.setItem(this.favoritesKey, JSON.stringify(this.favorites));
+    this.favoriteCountSubject.next(this.favorites.length);
   }
 
   public getFavorites(): Array<Character> {
@@ -35,7 +40,7 @@ export class FavoritesService {
     this.saveFavorites();
   }
 
-  getFavoriteCount(): number {
-    return this.favorites.length;
+  getFavoriteCount(): Observable<number> {
+    return this.favoriteCountSubject.asObservable();
   }
 }

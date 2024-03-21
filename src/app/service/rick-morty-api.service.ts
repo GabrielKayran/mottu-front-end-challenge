@@ -15,10 +15,6 @@ export class RickMortyApiService {
     return this.http.get<Array<Character>>(this.url);
   }
 
-  getCharacter(id: number): Observable<Character> {
-    return this.http.get<Character>(`${this.url}${id}`);
-  }
-
   searchCharacter(name: string): Observable<Character[]> {
     return this.http.get<Character[]>(`${this.url}?name=${name}`);
   }

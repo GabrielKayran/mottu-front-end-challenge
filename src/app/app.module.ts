@@ -9,11 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CardComponent } from './modules/rick-morty/components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { FavoritesComponent } from './modules/rick-morty/pages/favorites/favorites.component';
-import {
-  MatFormFieldModule,
-  MatInputModule,
-  MatSlideToggleModule,
-} from '@angular/material';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -28,9 +27,9 @@ import {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

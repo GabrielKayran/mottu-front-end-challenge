@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { FavoritesService } from 'src/app/service/favorites.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { FavoritesService } from 'src/app/service/favorites.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public favoriteCount: number = 0;
+  public favoriteCount$: Observable<number> | null = null;
 
   constructor(
     private favoritesService: FavoritesService,
@@ -19,8 +20,8 @@ export class HeaderComponent implements OnInit {
     this.getFavoriteCount();
   }
 
-  public getFavoriteCount() {
-    this.favoriteCount = this.favoritesService.getFavoriteCount();
+  public getFavoriteCount(): void {
+    this.favoriteCount$ = this.favoritesService.getFavoriteCount();
   }
   public isActive(route: string): boolean {
     return this.router.url === route;
