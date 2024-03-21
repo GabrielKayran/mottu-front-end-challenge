@@ -27,7 +27,9 @@ export class FavoritesComponent implements OnInit {
   }
 
   public getFavorites() {
-    this.favorites = this.favoritesService.getFavorites();
+    this.favoritesService.getFavorites().subscribe((favorites) => {
+      this.favorites = favorites;
+    });
   }
 
   public removeFavorite(character: Character) {

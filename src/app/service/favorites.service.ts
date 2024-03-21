@@ -8,24 +8,32 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class FavoritesService {
   private favoritesKey = 'favorites';
   private favorites: Array<Character> = [];
-  private favoriteCountSubject: BehaviorSubject<number>;
+  private favoriteCountSubject: BehaviorSubject<number> =
+    new BehaviorSubject<number>(0);
+
+  private favoritesSubject: BehaviorSubject<Array<Character>> =
+    new BehaviorSubject<Array<Character>>([]);
 
   constructor() {
-    const storedFavorites = localStorage.getItem(this.favoritesKey);
-    this.favoriteCountSubject = new BehaviorSubject<number>(0);
-    if (storedFavorites) {
-      this.favorites = JSON.parse(storedFavorites);
-      this.favoriteCountSubject.next(this.favorites.length);
-    }
+    // const storedFavorites = localStorage.getItem(this.favoritesKey);
+    // if (storedFavorites) {
+    //   this.favorites = JSON.parse(storedFavorites);
+    //   this.favoriteCountSubject.next(this.favorites.length);
+    // }
+  }
+
+  private updateFavoritesData(): void {
+    this.favoritesSubject.next(this.favorites);
+    this.favoriteCountSubject.next(this.favorites.length);
   }
 
   private saveFavorites(): void {
     localStorage.setItem(this.favoritesKey, JSON.stringify(this.favorites));
-    this.favoriteCountSubject.next(this.favorites.length);
+    this.updateFavoritesData();
   }
 
-  public getFavorites(): Array<Character> {
-    return this.favorites;
+  public getFavorites(): Observable<Array<Character>> {
+    return this.favoritesSubject.asObservable();
   }
 
   public addFavorite(character: Character): void {

@@ -64,9 +64,11 @@ export class HomeComponent implements OnInit {
   }
 
   public isFav(character: Character): boolean {
-    return this.favoritesService
+    let favorites: Character[] = [];
+    this.favoritesService
       .getFavorites()
-      .some((fav) => fav.id === character.id);
+      .subscribe((favs) => (favorites = favs));
+    return favorites.some((fav) => fav.id === character.id);
   }
 
   public updateFav(isFav: boolean, character: Character) {

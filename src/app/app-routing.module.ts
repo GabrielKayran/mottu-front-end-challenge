@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './modules/rick-morty/pages/home/home.component';
-import { FavoritesComponent } from './modules/rick-morty/pages/favorites/favorites.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent,
-  },
-
-  {
     path: 'home',
-    component: HomeComponent,
+    loadChildren: () =>
+      import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'favorites',
-    component: FavoritesComponent,
+    loadChildren: () =>
+      import('./modules/favorites/favorites.module').then(
+        (m) => m.FavoritesModule
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 ];
 

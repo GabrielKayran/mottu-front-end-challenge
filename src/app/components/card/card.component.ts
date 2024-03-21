@@ -1,5 +1,5 @@
 import { FavoritesService } from 'src/app/service/favorites.service';
-import { Character } from './../../../../interfaces/character';
+import { Character } from '../../interfaces/character';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-card',
@@ -20,9 +20,9 @@ export class CardComponent implements OnInit {
   constructor(private favoritesService: FavoritesService) {}
 
   ngOnInit(): void {
-    this.isFavorite = this.favoritesService
-      .getFavorites()
-      .some((fav) => fav.id === this.character.id);
+    this.favoritesService.getFavorites().subscribe((favorites) => {
+      this.isFavorite = favorites.some((fav) => fav.id === this.character.id);
+    });
   }
 
   public toggleFav(): void {
