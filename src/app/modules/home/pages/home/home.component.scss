@@ -56,10 +56,33 @@ div.search {
     -webkit-text-stroke-color: var(--green-5);
     font-size: 48px;
   }
+}
 
-  // ::-webkit-input-placeholder {
-  //   color: var(--gray-5);
-  // }
+div.pagination {
+  margin: 40px 0px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    color: var(--white);
+    font-family: "Creepster", system-ui;
+    font-size: 24px;
+    margin: 0px 4px;
+  }
+  button {
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+
+    transition: transform 0.4s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
 }
 
 div.cards {

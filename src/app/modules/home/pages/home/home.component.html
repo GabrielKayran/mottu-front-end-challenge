@@ -18,9 +18,15 @@
         (updateFavorite)="updateFav( $event, character)"></app-card>
     </div>
 
-    <div class="no-characters" *ngIf="!characters.length && !isFetching">
+    <div class="no-characters" *ngIf="!characters">
       <h2> Nada foi encontrado</h2>
       <span>Tente realizar uma nova busca.</span>
+    </div>
+
+    <div class="pagination">
+      <button (click)="onPageChanged( currentPage - 1 )"><i class="ph ph-arrow-circle-left"></i></button>
+      <span> {{currentPage}} | {{totalPages}} </span>
+      <button (click)="onPageChanged( currentPage + 1 )"><i class="ph ph-arrow-circle-right"></i></button>
     </div>
   </div>
 </main>

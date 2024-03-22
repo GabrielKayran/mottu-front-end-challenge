@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RickMortyApiService } from 'src/app/service/rick-morty-api.service';
 import { Character } from 'src/app/interfaces/character';
 import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -17,73 +17,54 @@ export class HomeComponent implements OnInit {
   ) {}
 
   public results: any = [];
-  private currentPage: number = 1;
-  private lastScrollPosition: number = 0;
-  public isFetching: boolean = false;
   public searchTerm: string = '';
   public characters: Array<Character> = [];
+  public currentPage: number = 1;
+  public totalPages: number = 0;
   private searchTermChanged: Subject<string> = new Subject<string>();
 
   ngOnInit(): void {
-    this.getCharacters();
+    this.getCharacters(this.currentPage);
 
     this.searchTermChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((term: string) => {
-        this.searchCharacter(term);
+        this.searchCharacter(term, this.currentPage);
       });
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll() {
-    const currentScrollPosition =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
-
-    const isScrollingDown = currentScrollPosition > this.lastScrollPosition;
-
-    if (
-      isScrollingDown &&
-      !this.isFetching &&
-      currentScrollPosition >
-        document.documentElement.scrollHeight - window.innerHeight - 300
-    ) {
-      this.currentPage++;
-      this.getCharacters(this.currentPage);
-      this.isFetching = true;
-    }
-
-    this.lastScrollPosition = currentScrollPosition;
-  }
-
   public getCharacters(page: number = 1) {
-    this.isFetching = true;
-    this.rickMortyApiService.getCharacters(page).subscribe((response) => {
-      this.characters = [...this.characters, ...response];
-      this.isFetching = false;
-    });
+    this.rickMortyApiService
+      .getCharacters(page)
+      .pipe(
+        catchError((error) => {
+          console.error('Erro ao buscar personagens:', error);
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        this.characters = response.results;
+        this.totalPages = response.info.pages;
+      });
   }
 
-  public searchCharacter(name: string) {
-    if (name.trim() !== '' && name.length > 0) {
+  public searchCharacter(name: string, page: number) {
+    if (name.trim() !== '') {
       this.rickMortyApiService
-        .searchCharacter(name)
+        .searchCharacter(name, page)
         .pipe(
-          catchError(() => {
-            this.characters = [];
-            return of([]);
+          catchError((error) => {
+            console.error('Erro ao buscar personagens:', error);
+            return of(null);
           })
         )
         .subscribe((response) => {
-          this.results = response;
-          this.characters = this.results.results;
+          this.characters = response.results;
+          this.totalPages = response.info.pages;
         });
     } else {
-      this.currentPage = 1;
       this.characters = [];
-      this.getCharacters();
+      this.getCharacters(page);
     }
   }
 
@@ -100,6 +81,16 @@ export class HomeComponent implements OnInit {
       this.favoritesService.addFavorite(character);
     } else {
       this.favoritesService.removeFavorite(character);
+    }
+  }
+
+  public onPageChanged(page: number): void {
+    const nextPage = Math.max(1, Math.min(page, this.totalPages));
+    this.currentPage = nextPage;
+    if (this.searchTerm.trim() === '') {
+      this.getCharacters(page);
+    } else {
+      this.searchCharacter(this.searchTerm, page);
     }
   }
 
