@@ -95,6 +95,12 @@ export class HomeComponent implements OnInit {
   }
 
   public onSearchTermChanged(term: string): void {
-    this.searchTermChanged.next(term);
+    this.currentPage = 1;
+    this.searchTerm = term;
+    if (term.trim() === '') {
+      this.getCharacters(1);
+    } else {
+      this.searchCharacter(term, 1);
+    }
   }
 }
