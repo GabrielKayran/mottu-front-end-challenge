@@ -10,17 +10,10 @@ export class FavoritesService {
   private favorites: Array<Character> = [];
   private favoriteCountSubject: BehaviorSubject<number> =
     new BehaviorSubject<number>(0);
-
   private favoritesSubject: BehaviorSubject<Array<Character>> =
     new BehaviorSubject<Array<Character>>([]);
 
-  constructor() {
-    // const storedFavorites = localStorage.getItem(this.favoritesKey);
-    // if (storedFavorites) {
-    //   this.favorites = JSON.parse(storedFavorites);
-    //   this.favoriteCountSubject.next(this.favorites.length);
-    // }
-  }
+  constructor() {}
 
   private updateFavoritesData(): void {
     this.favoritesSubject.next(this.favorites);
