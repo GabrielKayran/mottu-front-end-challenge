@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit {
         this.totalPages = response.info.pages;
       });
   }
-
   public searchCharacter(name: string, page: number) {
     if (name.trim() !== '') {
       this.rickMortyApiService
@@ -55,12 +54,19 @@ export class HomeComponent implements OnInit {
         .pipe(
           catchError((error) => {
             console.error('Erro ao buscar personagens:', error);
+            this.characters = [];
+            this.totalPages = 0;
             return of(null);
           })
         )
         .subscribe((response) => {
-          this.characters = response.results;
-          this.totalPages = response.info.pages;
+          if (response) {
+            this.characters = response.results;
+            this.totalPages = response.info.pages;
+          } else {
+            this.characters = [];
+            this.totalPages = 0;
+          }
         });
     } else {
       this.characters = [];
@@ -86,11 +92,13 @@ export class HomeComponent implements OnInit {
 
   public onPageChanged(page: number): void {
     const nextPage = Math.max(1, Math.min(page, this.totalPages));
-    this.currentPage = nextPage;
-    if (this.searchTerm.trim() === '') {
-      this.getCharacters(page);
-    } else {
-      this.searchCharacter(this.searchTerm, page);
+    if (nextPage !== this.currentPage) {
+      this.currentPage = nextPage;
+      if (this.searchTerm.trim() === '') {
+        this.getCharacters(this.currentPage);
+      } else {
+        this.searchCharacter(this.searchTerm, this.currentPage);
+      }
     }
   }
 
