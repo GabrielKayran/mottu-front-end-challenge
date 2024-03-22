@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { HomeModule } from './modules/home/home.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { HomeModule } from './modules/home/home.module';
     MatFormFieldModule,
     MatInputModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     FavoritesModule,
     HomeModule,
   ],

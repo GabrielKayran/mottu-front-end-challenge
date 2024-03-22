@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RickMortyApiService } from 'src/app/service/rick-morty-api.service';
 import { Character } from 'src/app/interfaces/character';
 import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -17,14 +17,11 @@ export class HomeComponent implements OnInit {
   ) {}
 
   public results: any = [];
+  private currentPage: number = 1;
+  private lastScrollPosition: number = 0;
+  public isFetching: boolean = false;
   public searchTerm: string = '';
   public characters: Array<Character> = [];
-  public character: Character = {
-    id: 0,
-    image: '',
-    name: '',
-    species: '',
-  };
   private searchTermChanged: Subject<string> = new Subject<string>();
 
   ngOnInit(): void {
@@ -37,10 +34,35 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  public getCharacters() {
-    this.rickMortyApiService.getCharacters().subscribe((response) => {
-      this.results = response;
-      this.characters = this.results.results;
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    const currentScrollPosition =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+    const isScrollingDown = currentScrollPosition > this.lastScrollPosition;
+
+    if (
+      isScrollingDown &&
+      !this.isFetching &&
+      currentScrollPosition >
+        document.documentElement.scrollHeight - window.innerHeight - 300
+    ) {
+      this.currentPage++;
+      this.getCharacters(this.currentPage);
+      this.isFetching = true;
+    }
+
+    this.lastScrollPosition = currentScrollPosition;
+  }
+
+  public getCharacters(page: number = 1) {
+    this.isFetching = true;
+    this.rickMortyApiService.getCharacters(page).subscribe((response) => {
+      this.characters = [...this.characters, ...response];
+      this.isFetching = false;
     });
   }
 
@@ -59,6 +81,8 @@ export class HomeComponent implements OnInit {
           this.characters = this.results.results;
         });
     } else {
+      this.currentPage = 1;
+      this.characters = [];
       this.getCharacters();
     }
   }

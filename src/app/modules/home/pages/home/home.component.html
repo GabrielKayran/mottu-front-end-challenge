@@ -18,10 +18,9 @@
         (updateFavorite)="updateFav( $event, character)"></app-card>
     </div>
 
-    <div class="no-characters" *ngIf="!characters">
+    <div class="no-characters" *ngIf="!characters.length && !isFetching">
       <h2> Nada foi encontrado</h2>
       <span>Tente realizar uma nova busca.</span>
     </div>
-
   </div>
 </main>
